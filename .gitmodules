@@ -1,0 +1,12 @@
+[submodule "deckJS/asciidoctor-backends"]
+	path = deckJS/asciidoctor-backends
+	url = git://github.com/asciidoctor/asciidoctor-backends.git
+	branch = master
+[submodule "revealJS/asciidoctor-backends"]
+	path = revealJS/asciidoctor-backends
+	url = https://github.com/asciidoctor/asciidoctor-backends.git
+	branch = master
+[submodule "revealJS/src/asciidoc/revealjs"]
+	path = revealJS/src/asciidoc/revealjs
+	url = https://github.com/hakimel/reveal.js.git
+	branch = master

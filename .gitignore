@@ -15,3 +15,6 @@ dsl/vfs/.*
 .settings
 .classpath
 .project
+.DS_Store
+.idea
+.gradle
