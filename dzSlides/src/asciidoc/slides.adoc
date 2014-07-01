@@ -1,16 +1,7 @@
-= Deck.js + AsciiDoctor + Gradle
-:author: Schalk W. Cronjé
-:email: ysb33r@gmail.com
-:deckjs_transition: fade
-:deckjs_theme: neon
-:navigation:
-:menu:
-:goto:
-
-
-== Title of Slide One 
-
-This is the first slide after the title slide.
+= dzSlides + AsciiDoctor + Gradle
+Schalk W. Cronjé
+:dzslides-transition: fade
+:dzslides-style: default
 
 == A slide with a block
 .Gilb's QA Values
@@ -63,7 +54,7 @@ high level objectives for products and processes, and then enabling their staff 
 |===
 
 [canvas-image="images/NtabaLogo_SkaarsSigbaar.png"]
-== Slide Two's Title will not be displayed 
+== Slide Two's Title will not be displayed
 
 This slide has a custom background and bullet points
 
@@ -79,4 +70,3 @@ This slide has a custom background and bullet points
  [role="canvas-caption", position="center-up"]
  This text is displayed on top of the example.jpg image.
 ////
-

@@ -12,13 +12,15 @@ buildscript {
 
 
     dependencies {
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.2'
-//        classpath 'org.asciidoctor:asciidoctor:0.8.0-SNAPSHOT'
+//        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.0'
+        classpath 'org.asciidoctor:asciidoctor:0.8.0-SNAPSHOT'
     }
 }
 
-apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+apply plugin: 'asciidoctor'
 apply plugin: 'idea'
+
+//import org.asciidoctor.gradle.AsciidoctorTask
 
 ext {
     srcDir  = new File("$projectDir/src/asciidoc")
@@ -29,7 +31,7 @@ ext {
 task copyWebImages(type : Copy ) {
     from ('src/asciidoc/main') {
         include 'images'
-        include 'deck.js'
+        include 'dzslides'
     }
     into htmlDir
 }
@@ -41,7 +43,8 @@ asciidoctor {
     logDocuments = true
     backends = ['html5']
     options = [
-	    'template_dir' : "${projectDir}/asciidoctor-backends/haml/deckjs",
+	    'template_dir' : "${projectDir}/templates/dzslides",
+        'template_engine' : 'slim',
             eruby: 'erubis',
             attributes: [
                     'source-highlighter': 'coderay',

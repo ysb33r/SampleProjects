@@ -18,3 +18,4 @@ dsl/vfs/.*
 .DS_Store
 .idea
 .gradle
+build
