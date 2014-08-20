@@ -20,6 +20,10 @@ buildscript {
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 apply plugin: 'idea'
 
+asciidoctorj {
+    version = '1.5.0'
+}
+
 ext {
     srcDir  = new File("$projectDir/src/asciidoc")
     srcDoc  = new File("$srcDir/slides.adoc")
