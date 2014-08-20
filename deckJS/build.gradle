@@ -43,9 +43,11 @@ asciidoctor {
     sourceDocumentName = srcDoc
     outputDir = htmlDir
     logDocuments = true
-    backends = ['html5']
+//    backends = ['html5']
+    backends = ['deckjs']
     options = [
-	    'template_dir' : "${projectDir}/asciidoctor-backends/haml/deckjs",
+	template_dirs : ["${projectDir}/asciidoctor-backends/haml".toString()],
+//	    'template_dirs' : "${projectDir}/asciidoctor-backends/haml/deckjs",
             eruby: 'erubis',
             attributes: [
                     'source-highlighter': 'coderay',
