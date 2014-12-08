@@ -8,48 +8,43 @@ buildscript {
 
 
     dependencies {
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2-SNAPSHOT'
-//        classpath 'org.ysb33r.gradle:vfs-gradle-plugin:1.0-beta1'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2'
+        classpath 'org.ysb33r.gradle:vfs-gradle-plugin:1.0-beta1'
         classpath 'commons-httpclient:commons-httpclient:3.1'
     }
 }
 
-//apply plugin: 'org.ysb33r.vfs'
+apply plugin: 'org.ysb33r.vfs'
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
-repositories {
-//    vfsRoot {
-//        name 'GenericGithub'
-////        url 'https://github.com'
-//        url 'file:///Users/schalkc/Projects/SampleProjects/deckJS/REPO'
-//        pattern '[organisation]/[module]/archive/[revision].[ext]'
-//    }
-
-}
 
 ext {
     deckjsVersion = 'master'
+    asciidoctorBackendVersion = 'master'
     srcDir  = new File("$projectDir/src/asciidoc")
     srcDoc  = new File("$srcDir/slides.adoc")
     htmlDir = new File("$buildDir/docs")
+    downloadDir = new File(buildDir,'download')
+    templateDir = new File(downloadDir,'templates')
+    deckjsDir   = new File(downloadDir,'deck.js')
 }
 
-configurations {
-    deckjs
-}
 
-dependencies {
-    deckjs "imakewebthings:deck.js:${deckjsVersion}@zip"
-}
+task download << {
+  mkdir downloadDir
+  vfs {
+    cp "zip:https://github.com/asciidoctor/asciidoctor-backends/archive/${asciidoctorBackendVersion}.zip!asciidoctor-backends-${asciidoctorBackendVersion}",
+      templateDir, recursive:true, overwrite:true
+    cp "zip:https://github.com/imakewebthings/deck.js/archive/${deckjsVersion}.zip!deck.js-${deckjsVersion}",
+      deckjsDir, recursive:true, overwrite:true
+  }
 
-task tmp << {
-    println configurations.deckjs.files
+} 
+
+download {
+  outputs.dir templateDir
+  outputs.dir deckjsDir
 }
-//task unpackBackends( type : Copy ) {
-//    def src = project.conf
-//    from zipTree( )
-//    into new File(buildDir,'downloads')
-//}
 
 asciidoctor {
     logDocuments = true
@@ -58,14 +53,12 @@ asciidoctor {
 
     sources {
         include 'slides.adoc'
-        //include 'test.adoc'
     }
 
-    //backends 'deckjs'
-	backends 'html5'
+    backends 'deckjs'
+//	backends 'html5'
 
-    //options template_dirs : [new File(projectDir,'asciidoctor-backends/haml')]
-    options template_dirs : [new File(projectDir,'../revealJS/asciidoctor-backends/haml').absolutePath]
+    options template_dirs : [new File(templateDir,'haml').absolutePath ]
     options eruby: 'erubis'
 
     attributes 'source-highlighter': 'coderay'
@@ -76,6 +69,10 @@ asciidoctor {
         from (sourceDir) {
             include 'images/**'
         }
-
+	from (downloadDir) {
+		include 'deck.js/**'
+	}
     }
+
+    dependsOn download
 }

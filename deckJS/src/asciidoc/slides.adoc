@@ -10,7 +10,7 @@
 
 == Title of Slide One 
 
-{version}
+{revnumber}
 
 This is the first slide after the title slide.
 
