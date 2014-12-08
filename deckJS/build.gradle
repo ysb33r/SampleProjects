@@ -22,8 +22,6 @@ ext {
     deckjsVersion = 'master'
     asciidoctorBackendVersion = 'master'
     srcDir  = new File("$projectDir/src/asciidoc")
-    srcDoc  = new File("$srcDir/slides.adoc")
-    htmlDir = new File("$buildDir/docs")
     downloadDir = new File(buildDir,'download')
     templateDir = new File(downloadDir,'templates')
     deckjsDir   = new File(downloadDir,'deck.js')
@@ -56,7 +54,6 @@ asciidoctor {
     }
 
     backends 'deckjs'
-//	backends 'html5'
 
     options template_dirs : [new File(templateDir,'haml').absolutePath ]
     options eruby: 'erubis'
