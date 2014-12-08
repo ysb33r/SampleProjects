@@ -2,60 +2,80 @@ project.version = 1.0
 
 buildscript {
     repositories {
-        maven {
-            name 'Bintray Asciidoctor repo'
-            url  'http://dl.bintray.com/content/aalmiray/asciidoctor'
-        }
         mavenLocal()
         jcenter()
     }
 
 
     dependencies {
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.3'
-//        classpath 'org.asciidoctor:asciidoctor:0.8.0-SNAPSHOT'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2-SNAPSHOT'
+//        classpath 'org.ysb33r.gradle:vfs-gradle-plugin:1.0-beta1'
+        classpath 'commons-httpclient:commons-httpclient:3.1'
     }
 }
 
+//apply plugin: 'org.ysb33r.vfs'
 apply plugin: 'org.asciidoctor.gradle.asciidoctor'
-apply plugin: 'idea'
 
-asciidoctorj {
-    version = '1.5.0'
+repositories {
+//    vfsRoot {
+//        name 'GenericGithub'
+////        url 'https://github.com'
+//        url 'file:///Users/schalkc/Projects/SampleProjects/deckJS/REPO'
+//        pattern '[organisation]/[module]/archive/[revision].[ext]'
+//    }
+
 }
 
 ext {
+    deckjsVersion = 'master'
     srcDir  = new File("$projectDir/src/asciidoc")
     srcDoc  = new File("$srcDir/slides.adoc")
-    htmlDir = new File("$buildDir/html")
+    htmlDir = new File("$buildDir/docs")
 }
 
-task copyWebImages(type : Copy ) {
-    from ('src/asciidoc/main') {
-        include 'images'
-        include 'deck.js'
-    }
-    into htmlDir
+configurations {
+    deckjs
 }
+
+dependencies {
+    deckjs "imakewebthings:deck.js:${deckjsVersion}@zip"
+}
+
+task tmp << {
+    println configurations.deckjs.files
+}
+//task unpackBackends( type : Copy ) {
+//    def src = project.conf
+//    from zipTree( )
+//    into new File(buildDir,'downloads')
+//}
 
 asciidoctor {
-    sourceDir = srcDir
-    sourceDocumentName = srcDoc
-    outputDir = htmlDir
     logDocuments = true
-//    backends = ['html5']
-    backends = ['deckjs']
-    options = [
-	template_dirs : ["${projectDir}/asciidoctor-backends/haml".toString()],
-//	    'template_dirs' : "${projectDir}/asciidoctor-backends/haml/deckjs",
-            eruby: 'erubis',
-            attributes: [
-                    'source-highlighter': 'coderay',
-                    idprefix: '',
-                    idseparator: '-'
-            ]
-    ]
 
-    dependsOn copyWebImages
+    sourceDir 'src/asciidoc'
+
+    sources {
+        include 'slides.adoc'
+        //include 'test.adoc'
+    }
+
+    //backends 'deckjs'
+	backends 'html5'
+
+    //options template_dirs : [new File(projectDir,'asciidoctor-backends/haml')]
+    options template_dirs : [new File(projectDir,'../revealJS/asciidoctor-backends/haml').absolutePath]
+    options eruby: 'erubis'
+
+    attributes 'source-highlighter': 'coderay'
+    attributes idprefix: ''
+    attributes idseparator: '-'
+
+    resources {
+        from (sourceDir) {
+            include 'images/**'
+        }
+
+    }
 }
-
