@@ -1,7 +1,0 @@
-apply plugin : 'maven'
-
-install {
-    repositories.mavenInstaller {
-        pom.artifactId = archivesBaseName
-    }
-}

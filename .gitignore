@@ -19,3 +19,4 @@ dsl/vfs/.*
 .idea
 .gradle
 build
+*.iml
