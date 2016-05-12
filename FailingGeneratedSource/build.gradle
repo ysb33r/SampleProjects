@@ -2,14 +2,19 @@ plugins {
   id 'cpp'
 }
 
-model {
-  tasks {
-    copySource(Copy) {
+    task copySource(type:Copy) {
+      ext {
+        sourceDir = {file("${buildDir}/src")}
+        headerDir = sourceDir
+      }
       from 'templates', {
         include '*.cpp'
       }
       into "${buildDir}/src"
     }
+
+model {
+  tasks {
   }
   components {
     hello(NativeExecutableSpec) {
@@ -19,11 +24,7 @@ model {
             srcDir file("${buildDir}/src")
             include '*.cpp'
           }
-        }
-      }
-      tasks.all {
-        if(name != 'copySource') {
-          dependsOn 'copySource'
+	  generatedBy tasks.copySource
         }
       }
     }
