@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'commons-httpclient:commons-httpclient:3.1'
+    }
+}
+
+plugins {
+  id 'org.ysb33r.vfs' version '1.0'
+}
+
+ext {
+  revealjsVersion = 'master'
+}
+
+
+task download << {
+  mkdir buildDir
+    vfs {
+      cp "zip:https://github.com/hakimel/reveal.js/archive/${revealjsVersion}.zip!reveal.js-${revealjsVersion}",
+                    buildDir, recursive: true, overwrite: true
+    }
+}
