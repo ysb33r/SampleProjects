@@ -12,7 +12,7 @@ class ExampleSpec extends Specification {
     @Shared @AutoCleanup HibernateDatastore hibernateDatastore
     @Shared PlatformTransactionManager transactionManager
     @Shared Map configuration = [
-      'hibernate.hbm2ddl.auto':'create-drop',
+      'hibernate.hbm2ddl.auto':'create',
       'dataSource.url':'jdbc:h2:mem:myDB'
     ]
     
