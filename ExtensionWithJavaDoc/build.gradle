@@ -1,3 +1,5 @@
+import org.jsoup.*
+
 buildscript {
     repositories {
         jcenter()
@@ -20,5 +22,19 @@ asciidoctor {
     }
 
     attributes "source-highlighter": "coderay"
+
+    extensions {
+      postprocessor { document, output ->
+        if(document.basebackend("html")) {
+          org.jsoup.nodes.Document doc = Jsoup.parse(output, "UTF-8")
+
+          def contentElement = doc.getElementsByTag("body")
+          contentElement.append('Broken Foo')
+          doc.html()
+        } else {
+          throw new IllegalArgumentException("Expected html!")
+        }
+      }
+    }
 }
 
