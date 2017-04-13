@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jsoup:jsoup:1.10.1"
+    }
+}
+
+plugins {
+    id "org.asciidoctor.convert" version "1.5.3"
+}
+
+asciidoctor {
+    backends  'html5'
+
+    sources {
+        include "index.adoc"
+    }
+
+    attributes "source-highlighter": "coderay"
+}
+

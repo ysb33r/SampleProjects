@@ -1,0 +1,22 @@
+= Example with Javadoc
+:toc: right
+:toclevels: 2
+:numbered:
+
+== Section talking about code
+
+.somefile.java
+[source,java]
+----
+/**
+ * Some text
+ * <p>
+ * Then a paragraph
+ * <pre>
+ * Foo foo = new Foo();
+ * </pre>
+ */
+public class Foo {
+}; 
+----
+
