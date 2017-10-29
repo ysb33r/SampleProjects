@@ -1,0 +1,9 @@
+plugins {
+  id "org.ysb33r.ivypot" version "0.5" apply false
+}
+
+allprojects {
+  repositories {
+    jcenter()
+  }
+}

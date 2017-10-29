@@ -1,0 +1,4 @@
+= Example use of IvyPot 
+
+This is an example of using the `org.ysb33r.ivypot` plugin
+in a multi-project scenario.
